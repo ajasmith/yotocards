@@ -3,5 +3,7 @@
 *.aux
 *.swp
 *.gz
+*.pdf
+*.out
 cards.*
 img/
