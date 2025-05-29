@@ -1,0 +1,36 @@
+\ProvidesPackage{yotocard}
+  [2025/04/22 v1.0 First working version of yotocard package]
+
+\RequirePackage{graphicx}
+\RequirePackage{color}
+\RequirePackage{tikz}
+\RequirePackage{ifthen}
+
+\usetikzlibrary{positioning}
+\pgfmathsetmacro{\cardwidth}{5.5pt}
+\pgfmathsetmacro{\cardheight}{8.8pt}
+
+\def\shapeCard{(0,0) rectangle (\cardwidth, \cardheight)}
+\tikzstyle{cardcorners}=[rounded corners=0.25cm]
+\tikzstyle{cardimage}=[path picture={
+  \node[below=-1.5mm] at (0.5*\cardwidth,\cardheight) {
+    \includegraphics[height=\cardheight cm]{#1}
+  };
+}]
+
+\newcommand{\yotocard}[2][lightgray]{
+  \noindent
+  \begin{tikzpicture}
+    \ifthenelse{\equal{#2}{}}{
+      \draw[#1,cardcorners] \shapeCard;
+    }{
+      \draw[#1,cardcorners, cardimage=#2] \shapeCard;
+    }
+  \end{tikzpicture}
+  \hspace{22pt}
+  \vspace{8pt}
+}
+
+\newcommand{\emptycardspace}{\yotocard[transparent]{}}
+
+\endinput

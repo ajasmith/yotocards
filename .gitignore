@@ -1,0 +1,7 @@
+*.aux
+*.log
+*.aux
+*.swp
+*.gz
+cards.*
+img/
