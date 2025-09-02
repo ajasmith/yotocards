@@ -6,6 +6,8 @@ You need to have [LaTeX installed](https://www.latex-project.org/get/). If you d
 
 ## Example code
 In a latex document, include the package `yotocard` and then make cards using the command `\yotocard{path-to-card}`.
+You can create numbered cards using `yotocardwithnumber{path-to-card}{number}`.
+You can create blank spaces that are the size of a card using `\emptycardspace`.
 
 ```latex
 % example.tex
@@ -15,17 +17,14 @@ In a latex document, include the package `yotocard` and then make cards using th
 \pagenumbering{gobble}
 
 \begin{document}
-  \begin{flushright}
-    \noindent
     \yotocard{examples/unicornwithmic.jpg}
     \emptycardspace
     \yotocard{examples/rabbit.jpg}
-    \emptycardspace
+    \emptycardspace \\
     \yotocard[black]{examples/unicornwithmic.jpg}
     \yotocard[red]{}
-    \yotocard[red]{examples/rabbit.jpg}
-    \yotocard[blue]{}
-  \end{flushright}
+    \yotocardwithnumber[red]{examples/rabbit.jpg}{5}
+    \yotocardwithnumber[blue]{}{6a}
 \end{document}
 
 ```
@@ -38,6 +37,13 @@ and you should end up with something that looks like this:
 
 ![the output](examples/exampleoutput.jpg)
 
+
+## Recommended use case
+This is what I do, but you should do what you feel :-)
+ - print the pdfs onto a sheet of self-adhesive vinyl inkjet paper;
+ - to protect the printed surface, stick a second layer of the vinyl paper over the printed layer
+ - cut the cards out
+ - stick them to a make your own yoto card (one side of the card is completely white)
 
 
 ## Future work and bugs

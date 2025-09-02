@@ -1,5 +1,10 @@
 \ProvidesPackage{yotocard}
-  [2025/04/22 v1.0 First working version of yotocard package]
+  % yotocard.sty - Package for creating yotocards
+  % 
+  % File History:
+  %   v1.0 2025/04/22 - First working version of yotocard package
+  %   v1.1 2025/08/30 - Added add support for numbering cards
+  [2025/08/30 v1.1 Added add support for numbering cards]
 
 \RequirePackage{graphicx}
 \RequirePackage{color}
@@ -7,18 +12,23 @@
 \RequirePackage{ifthen}
 
 \usetikzlibrary{positioning}
+
 \pgfmathsetmacro{\cardwidth}{5.5pt}
 \pgfmathsetmacro{\cardheight}{8.8pt}
+\pgfmathsetmacro{\cornerradius}{0.25cm}
+\pgfmathsetmacro{\numbercirclexpos}{0.85*\cardwidth}
+\pgfmathsetmacro{\numbercircleypos}{0.15*\cardwidth}
 
 \def\shapeCard{(0,0) rectangle (\cardwidth, \cardheight)}
-\tikzstyle{cardcorners}=[rounded corners=0.25cm]
+\tikzstyle{cardcorners}=[rounded corners=\cornerradius]
 \tikzstyle{cardimage}=[path picture={
   \node[below=-1.5mm] at (0.5*\cardwidth,\cardheight) {
     \includegraphics[height=\cardheight cm]{#1}
   };
 }]
 
-\newcommand{\yotocard}[2][lightgray]{
+
+\newcommand{\yotocardwithnumber}[3][lightgray]{
   \noindent
   \begin{tikzpicture}
     \ifthenelse{\equal{#2}{}}{
@@ -26,11 +36,18 @@
     }{
       \draw[#1,cardcorners, cardimage=#2] \shapeCard;
     }
+
+    \ifthenelse{\equal{#3}{}}{
+      % Do nothing
+    }{
+        \filldraw[fill=white, fill opacity=0.8, draw opacity=0.1] (\numbercirclexpos,\numbercircleypos) circle (5mm);
+        \node at (\numbercirclexpos,\numbercircleypos) {\Large \sffamily \bf #3};
+    }
   \end{tikzpicture}
   \hspace{22pt}
   \vspace{8pt}
-}
-
-\newcommand{\emptycardspace}{\yotocard[transparent]{}}
-
+  }
+  
+  \newcommand{\yotocard}[2][lightgray]{\yotocardwithnumber[#1]{#2}{}}
+  \newcommand{\emptycardspace}{\yotocard[transparent]{}}
 \endinput
