@@ -5,5 +5,7 @@
 *.gz
 *.pdf
 *.out
-cards.*
+*.vscode
+*.tex
+!/example.tex
 img/
