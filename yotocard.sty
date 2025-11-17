@@ -5,6 +5,7 @@
   %   v1.0 2025/04/22 - First working version of yotocard package
   %   v1.1 2025/08/30 - Added add support for numbering cards
   %   v2.0 2025/11/17 - Add image overlay and custom node support
+  %   v2.1 2025/11/17 - No need for overlay. Removing.
   [2025/11/17 v2.0 Add image overlay and custom node support]
 
 \RequirePackage{graphicx}
@@ -20,46 +21,40 @@
 \pgfmathsetmacro{\numbercirclexpos}{0.85*\cardwidth}
 \pgfmathsetmacro{\numbercircleypos}{0.15*\cardwidth}
 
+
+\def\shapeCard{(0,0) rectangle (\cardwidth, \cardheight)}
+\tikzstyle{cardcorners}=[rounded corners=\cornerradius]
+
 \def\insertcardimageinpicture#1{%
   \node[below=-1.5mm] at (0.5*\cardwidth,\cardheight) {
     \includegraphics[height=\cardheight cm]{#1}
   };
 }
-\def\shapeCard{(0,0) rectangle (\cardwidth, \cardheight)}
-\tikzstyle{cardcorners}=[rounded corners=\cornerradius]
 
-\newcommand{\yotocardinternal}[5][lightgray]{
+\def\numbercircle#1{%
+  \filldraw[fill=white, fill opacity=0.8, draw opacity=0.1] (\numbercirclexpos,\numbercircleypos) circle (5mm);%
+  \node at (\numbercirclexpos,\numbercircleypos) {\Large \sffamily \bf #1};%
+}
+
+\newcommand{\yotocardinternal}[3][lightgray]{
   \noindent
   \begin{tikzpicture}
     \ifthenelse{\equal{#2}{}}{
       \draw[#1,cardcorners] \shapeCard;
     }{
-      \ifthenelse{\equal{#4}{}}{
-        \draw[#1,cardcorners, path picture={
-          \insertcardimageinpicture{#2}
-        }] \shapeCard;
-      }{
-        \draw[#1,cardcorners, path picture={
-          \insertcardimageinpicture{#2}
-          \insertcardimageinpicture{#4}
-        }] \shapeCard;
-      }
+      \draw[#1,cardcorners, path picture={
+        \insertcardimageinpicture{#2}
+      }] \shapeCard;
     }
 
-    \ifthenelse{\equal{#3}{}}{}{
-        \filldraw[fill=white, fill opacity=0.8, draw opacity=0.1] (\numbercirclexpos,\numbercircleypos) circle (5mm);
-        \node at (\numbercirclexpos,\numbercircleypos) {\Large \sffamily \bf #3};
-    }
-
-    #5
+    #3
   \end{tikzpicture}
   \hspace{22pt}
   \vspace{8pt}
-  }
-  
-  \newcommand{\yotocardwithcustomnode}[3][lightgray]{\yotocardinternal[#1]{#2}{}{}{#3}}
-  \newcommand{\yotocardwithnumber}[3][lightgray]{\yotocardinternal[#1]{#2}{#3}{}{}}
-  \newcommand{\yotocardwithoverlay}[3][lightgray]{\yotocardinternal[#1]{#2}{}{#3}{}}
-  \newcommand{\yotocard}[2][lightgray]{\yotocardinternal[#1]{#2}{}{}{}}
-  \newcommand{\emptycardspace}{\yotocardinternal[transparent]{}{}{}{}{}}
+}
+
+\newcommand{\yotocardwithcustomnode}[3][lightgray]{\yotocardinternal[#1]{#2}{#3}}
+\newcommand{\yotocardwithnumber}[3][lightgray]{\yotocardinternal[#1]{#2}{\numbercircle{#3}}}
+\newcommand{\yotocard}[2][lightgray]{\yotocardinternal[#1]{#2}{}}
+\newcommand{\emptycardspace}{\yotocardinternal[transparent]{}{}{}}
 \endinput
