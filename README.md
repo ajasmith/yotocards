@@ -8,6 +8,7 @@ You need to have [LaTeX installed](https://www.latex-project.org/get/). If you d
 In a latex document, include the package `yotocard` and then make cards using the command `\yotocard{path-to-card}`.
 You can create numbered cards using `yotocardwithnumber{path-to-card}{number}`.
 You can create blank spaces that are the size of a card using `\emptycardspace`.
+If you want to do something spicy, like add custom text, use `\yotocardwithcustomnode{path-to-card}{custom-node}`.
 
 ```latex
 % example.tex
@@ -22,9 +23,15 @@ You can create blank spaces that are the size of a card using `\emptycardspace`.
     \yotocard{examples/rabbit.jpg}
     \emptycardspace \\
     \yotocard[black]{examples/unicornwithmic.jpg}
-    \yotocard[red]{}
     \yotocardwithnumber[red]{examples/rabbit.jpg}{5}
     \yotocardwithnumber[blue]{}{6a}
+    \yotocardwithcustomnode[red]{}{\node[
+        anchor=south,
+        text width=0.9*\cardwidth cm,
+        inner sep=2mm
+        ] at (0.5*\cardwidth,0)
+          {\Huge Example node with custom text};
+    }
 \end{document}
 ```
 
@@ -46,7 +53,6 @@ This is what I do, but you should do what you feel :-)
 
 
 ## Future work and bugs
-- Add title/ subtitle/ image overlay support
 - Add support for fixing to card width instead of height
 
 Questions, suggestions and bug reports can be logged at https://github.com/ajasmith/yotocards where you can also find the latest version.

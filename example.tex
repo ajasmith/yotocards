@@ -9,7 +9,13 @@
     \yotocard{examples/rabbit.jpg}
     \emptycardspace \\
     \yotocard[black]{examples/unicornwithmic.jpg}
-    \yotocard[red]{}
     \yotocardwithnumber[red]{examples/rabbit.jpg}{5}
     \yotocardwithnumber[blue]{}{6a}
+    \yotocardwithcustomnode[red]{}{\node[
+        anchor=south,
+        text width=0.9*\cardwidth cm,
+        inner sep=2mm
+        ] at (0.5*\cardwidth,0)
+          {\Huge Example node with custom text};
+    }
 \end{document}
